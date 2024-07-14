@@ -12,7 +12,7 @@
     import Header, { HeadingPage } from "$lib/components/header/header.svelte";
     import { getContext, setContext } from "svelte";
     let setHeadingPage: (_: HeadingPage) => void = getContext("setHeadingPage");
-    setHeadingPage(HeadingPage.Home);
+    setHeadingPage("Home");
 </script>
 
 <div class="mx-auto grid w-full max-w-6xl gap-2">
