@@ -15,11 +15,15 @@
     import { get } from "svelte/store";
     import { getContext } from "svelte";
     import FileX2 from "lucide-svelte/icons/file-plus-2";
+    import Pen from "lucide-svelte/icons/pen";
+    import ImagePlus from "lucide-svelte/icons/image-plus";
+    import Globe from "lucide-svelte/icons/globe";
     import type { Phrases } from "$lib/languages/types";
     import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
     import * as Dialog from "$lib/components/ui/dialog/index.js";
     import { Input } from "$lib/components/ui/input/index.js";
     import { Label } from "$lib/components/ui/label/index.js";
+    import * as RadioGroup from "../ui/radio-group";
     export let headingPage: HeadingPage | null;
 
     let phrases: Phrases = getContext("phrases");
@@ -101,27 +105,73 @@
                         {phrases.CreateNewRecipeDescription}
                     </Dialog.Description>
                 </Dialog.Header>
-                <div class="grid gap-4 py-4">
-                    <div class="grid grid-cols-4 items-center gap-4">
-                        <Label for="name" class="text-right">Name</Label>
-                        <Input
-                            id="name"
-                            value="Pedro Duarte"
-                            class="col-span-3"
-                        />
-                    </div>
-                    <div class="grid grid-cols-4 items-center gap-4">
-                        <Label for="username" class="text-right">Username</Label
+                <div class="grid gap-6">
+                    <RadioGroup.Root value="scratch" class="grid gap-1">
+                        <Label
+                            for="scratch"
+                            class="border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
                         >
-                        <Input
-                            id="username"
-                            value="@peduarte"
-                            class="col-span-3"
-                        />
-                    </div>
+                            <RadioGroup.Item
+                                value="scratch"
+                                id="scratch"
+                                class="sr-only"
+                                aria-label="From scratch"
+                            />
+                            <Pen class="mt-px h-5 w-5" />
+                            <div class="space-y-1">
+                                <p class="text-base font-medium leading-none">
+                                    {phrases.FromScratch}
+                                </p>
+                                <p class="text-muted-foreground text-sm">
+                                    {phrases.FromScratchDescription}
+                                </p>
+                            </div>
+                        </Label>
+                        <Label
+                            for="images"
+                            class="border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
+                        >
+                            <RadioGroup.Item
+                                value="images"
+                                id="images"
+                                class="sr-only"
+                                aria-label="From images or documents"
+                            />
+                            <ImagePlus class="mt-px h-5 w-5" />
+                            <div class="space-y-1">
+                                <p class="text-base font-medium leading-none">
+                                    {phrases.FromImages}
+                                </p>
+                                <p class="text-muted-foreground text-sm">
+                                    {phrases.FromImagesDescription}
+                                </p>
+                            </div>
+                        </Label>
+                        <Label
+                            for="website"
+                            class="border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
+                        >
+                            <RadioGroup.Item
+                                value="website"
+                                id="website"
+                                class="sr-only"
+                                aria-label="From website"
+                            />
+                            <Globe class="mt-px h-5 w-5" />
+
+                            <div class="space-y-1">
+                                <p class="text-base font-medium leading-none">
+                                    {phrases.FromWebsite}
+                                </p>
+                                <p class="text-muted-foreground text-sm">
+                                    {phrases.FromWebsiteDescription}
+                                </p>
+                            </div>
+                        </Label>
+                    </RadioGroup.Root>
                 </div>
                 <Dialog.Footer>
-                    <Button type="submit">Save changes</Button>
+                    <Button type="submit">Next</Button>
                 </Dialog.Footer>
             </Dialog.Content>
         </Dialog.Root>
