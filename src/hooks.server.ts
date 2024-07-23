@@ -1,9 +1,11 @@
+import { dev } from "$app/environment";
 import { parseAcceptLanguage } from "$lib/accept-language";
 import { getBestLocale } from "$lib/languages/lang";
 import { UserPreference } from "$lib/types";
+import { error } from "@sveltejs/kit";
 
 export async function handle({ event, resolve }) {
-    const { cookies, locals } = event
+    const { cookies, locals, request } = event
 
     locals.user = null;
 

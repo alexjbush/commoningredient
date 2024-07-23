@@ -1,7 +1,9 @@
 import { fontFamily } from "tailwindcss/defaultTheme";
+import colors from "tailwindcss/colors";
+const { withTV } = require('tailwind-variants/transformer');
 
 /** @type {import('tailwindcss').Config} */
-const config = {
+const config = withTV({
 	darkMode: ["class"],
 	content: ["./src/**/*.{html,js,svelte,ts}"],
 	safelist: ["dark"],
@@ -21,8 +23,10 @@ const config = {
 				background: "hsl(var(--background) / <alpha-value>)",
 				foreground: "hsl(var(--foreground) / <alpha-value>)",
 				primary: {
-					DEFAULT: "hsl(var(--primary) / <alpha-value>)",
-					foreground: "hsl(var(--primary-foreground) / <alpha-value>)"
+					// DEFAULT: "hsl(var(--primary) / <alpha-value>)",
+					DEFAULT: colors.teal["600"],
+					// foreground: "hsl(var(--primary-foreground) / <alpha-value>)"
+					foreground: colors.slate["50"],
 				},
 				secondary: {
 					DEFAULT: "hsl(var(--secondary) / <alpha-value>)",
@@ -59,6 +63,6 @@ const config = {
 			}
 		}
 	},
-};
+});
 
 export default config;

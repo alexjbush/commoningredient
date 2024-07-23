@@ -8,16 +8,18 @@
     import Menu from "lucide-svelte/icons/menu";
     import ChefHat from "lucide-svelte/icons/chef-hat";
     import Search from "lucide-svelte/icons/search";
-    import { Button } from "$lib/components/ui/button/index.js";
     import * as Card from "$lib/components/ui/card/index.js";
     import { Checkbox } from "$lib/components/ui/checkbox/index.js";
     import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-    import { Input } from "$lib/components/ui/input/index.js";
     import * as Sheet from "$lib/components/ui/sheet/index.js";
     import { get } from "svelte/store";
     import { getContext } from "svelte";
+    import FileX2 from "lucide-svelte/icons/file-plus-2";
     import type { Phrases } from "$lib/languages/types";
-
+    import { Button, buttonVariants } from "$lib/components/ui/button/index.js";
+    import * as Dialog from "$lib/components/ui/dialog/index.js";
+    import { Input } from "$lib/components/ui/input/index.js";
+    import { Label } from "$lib/components/ui/label/index.js";
     export let headingPage: HeadingPage | null;
 
     let phrases: Phrases = getContext("phrases");
@@ -82,6 +84,47 @@
         </Sheet.Content>
     </Sheet.Root>
     <div class="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        <Dialog.Root>
+            <Dialog.Trigger
+                class={buttonVariants({
+                    variant: "default",
+                    size: { initial: "icon", sm: "default" },
+                })}
+            >
+                <FileX2 class="sm:mr-2 h-5 w-5" />
+                <span class="hidden sm:block">{phrases.CreateNewRecipe}</span>
+            </Dialog.Trigger>
+            <Dialog.Content class="sm:max-w-[425px]">
+                <Dialog.Header>
+                    <Dialog.Title>{phrases.CreateNewRecipe}</Dialog.Title>
+                    <Dialog.Description>
+                        {phrases.CreateNewRecipeDescription}
+                    </Dialog.Description>
+                </Dialog.Header>
+                <div class="grid gap-4 py-4">
+                    <div class="grid grid-cols-4 items-center gap-4">
+                        <Label for="name" class="text-right">Name</Label>
+                        <Input
+                            id="name"
+                            value="Pedro Duarte"
+                            class="col-span-3"
+                        />
+                    </div>
+                    <div class="grid grid-cols-4 items-center gap-4">
+                        <Label for="username" class="text-right">Username</Label
+                        >
+                        <Input
+                            id="username"
+                            value="@peduarte"
+                            class="col-span-3"
+                        />
+                    </div>
+                </div>
+                <Dialog.Footer>
+                    <Button type="submit">Save changes</Button>
+                </Dialog.Footer>
+            </Dialog.Content>
+        </Dialog.Root>
         <form class="ml-auto flex-1 sm:flex-initial">
             <div class="relative">
                 <Search
@@ -89,7 +132,7 @@
                 />
                 <Input
                     type="search"
-                    placeholder="Search products..."
+                    placeholder={phrases.searchRecipes}
                     class="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
                 />
             </div>
