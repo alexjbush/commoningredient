@@ -25,6 +25,8 @@
     import { Label } from "$lib/components/ui/label/index.js";
     import * as RadioGroup from "../ui/radio-group";
     export let headingPage: HeadingPage | null;
+    let createRecipeRadioValue: "scratch" | "images" | "website" = "scratch";
+    let createRecipePage: "landing" | "from-images" = "landing";
 
     let phrases: Phrases = getContext("phrases");
 </script>
@@ -88,7 +90,12 @@
         </Sheet.Content>
     </Sheet.Root>
     <div class="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <Dialog.Root>
+        <Dialog.Root
+            onOpenChange={() => {
+                createRecipeRadioValue = "scratch";
+                createRecipePage = "landing";
+            }}
+        >
             <Dialog.Trigger
                 class={buttonVariants({
                     variant: "default",
@@ -105,73 +112,123 @@
                         {phrases.CreateNewRecipeDescription}
                     </Dialog.Description>
                 </Dialog.Header>
-                <div class="grid gap-6">
-                    <RadioGroup.Root value="scratch" class="grid gap-1">
-                        <Label
-                            for="scratch"
-                            class="border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
+                <div class="flex flex-col gap-2">
+                    {#if createRecipePage === "landing"}
+                        <RadioGroup.Root
+                            bind:value={createRecipeRadioValue}
+                            class="grid gap-1"
                         >
-                            <RadioGroup.Item
-                                value="scratch"
-                                id="scratch"
-                                class="sr-only"
-                                aria-label="From scratch"
-                            />
-                            <Pen class="mt-px h-5 w-5" />
-                            <div class="space-y-1">
-                                <p class="text-base font-medium leading-none">
-                                    {phrases.FromScratch}
-                                </p>
-                                <p class="text-muted-foreground text-sm">
-                                    {phrases.FromScratchDescription}
-                                </p>
-                            </div>
-                        </Label>
-                        <Label
-                            for="images"
-                            class="border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
-                        >
-                            <RadioGroup.Item
-                                value="images"
-                                id="images"
-                                class="sr-only"
-                                aria-label="From images or documents"
-                            />
-                            <ImagePlus class="mt-px h-5 w-5" />
-                            <div class="space-y-1">
-                                <p class="text-base font-medium leading-none">
-                                    {phrases.FromImages}
-                                </p>
-                                <p class="text-muted-foreground text-sm">
-                                    {phrases.FromImagesDescription}
-                                </p>
-                            </div>
-                        </Label>
-                        <Label
-                            for="website"
-                            class="border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
-                        >
-                            <RadioGroup.Item
-                                value="website"
-                                id="website"
-                                class="sr-only"
-                                aria-label="From website"
-                            />
-                            <Globe class="mt-px h-5 w-5" />
+                            <Label
+                                for="scratch"
+                                class="[&:has([data-disabled=true])]:bg-accent [&:has([data-disabled=true])]:text-muted-foreground [&:has([data-disabled=true])]:cursor-not-allowed border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
+                            >
+                                <RadioGroup.Item
+                                    value="scratch"
+                                    id="scratch"
+                                    class="sr-only"
+                                    aria-label="From scratch"
+                                />
+                                <Pen class="mt-px h-5 w-5" />
+                                <div class="space-y-1">
+                                    <p
+                                        class="text-base font-medium leading-none"
+                                    >
+                                        {phrases.FromScratch}
+                                    </p>
+                                    <p class="text-muted-foreground text-sm">
+                                        {phrases.FromScratchDescription}
+                                    </p>
+                                </div>
+                            </Label>
+                            <Label
+                                for="images"
+                                class="[&:has([data-disabled=true])]:bg-accent [&:has([data-disabled=true])]:text-muted-foreground [&:has([data-disabled=true])]:cursor-not-allowed border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
+                            >
+                                <RadioGroup.Item
+                                    value="images"
+                                    id="images"
+                                    class="sr-only"
+                                    aria-label="From images or documents"
+                                />
+                                <ImagePlus class="mt-px h-5 w-5" />
+                                <div class="space-y-1">
+                                    <p
+                                        class="text-base font-medium leading-none"
+                                    >
+                                        {phrases.FromImages}
+                                    </p>
+                                    <p class="text-muted-foreground text-sm">
+                                        {phrases.FromImagesDescription}
+                                    </p>
+                                </div>
+                            </Label>
+                            <Label
+                                for="website"
+                                class="[&:has([data-disabled=true])]:bg-accent [&:has([data-disabled=true])]:text-muted-foreground [&:has([data-disabled=true])]:cursor-not-allowed border-muted bg-popover hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary flex items-start space-x-4 rounded-md border-2 p-2"
+                            >
+                                <RadioGroup.Item
+                                    value="website"
+                                    id="website"
+                                    class="sr-only"
+                                    aria-label="From website"
+                                    disabled={true}
+                                />
+                                <Globe class="mt-px h-5 w-5" />
 
-                            <div class="space-y-1">
-                                <p class="text-base font-medium leading-none">
-                                    {phrases.FromWebsite}
-                                </p>
-                                <p class="text-muted-foreground text-sm">
-                                    {phrases.FromWebsiteDescription}
-                                </p>
-                            </div>
-                        </Label>
-                    </RadioGroup.Root>
+                                <div class="space-y-1">
+                                    <p
+                                        class="text-base font-medium leading-none"
+                                    >
+                                        {phrases.FromWebsite}
+                                    </p>
+                                    <p class="text-muted-foreground text-sm">
+                                        {phrases.FromWebsiteDescription}
+                                    </p>
+                                </div>
+                            </Label>
+                        </RadioGroup.Root>
+                    {:else if createRecipePage === "from-images"}
+                        Images
+                    {/if}
                 </div>
                 <Dialog.Footer>
-                    <Button type="submit">Next</Button>
+                    {#if createRecipePage === "landing"}
+                        {#if createRecipeRadioValue === "scratch"}
+                            <Button type="button">
+                                {phrases.LetsGo}
+                            </Button>
+                        {:else if createRecipeRadioValue === "images"}
+                            <Button
+                                type="button"
+                                on:click={() => {
+                                    createRecipePage = "from-images";
+                                }}
+                            >
+                                {phrases.Next}
+                            </Button>
+                        {/if}
+                    {:else}
+                        <div class="flex justify-between w-full">
+                            <Button
+                                type="button"
+                                variant="outline"
+                                on:click={() => {
+                                    createRecipePage = "landing";
+                                }}
+                            >
+                                {phrases.Back}
+                            </Button>
+
+                            <Button
+                                type="button"
+                                on:click={() => {
+                                    createRecipePage = "from-images";
+                                }}
+                            >
+                                {phrases.LetsGo}
+                            </Button>
+                        </div>
+                    {/if}
                 </Dialog.Footer>
             </Dialog.Content>
         </Dialog.Root>

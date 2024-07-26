@@ -4,6 +4,9 @@ import { assertUnreachable } from "$lib/utils";
 import type { Phrases } from "../types";
 
 export abstract class EnPhrases implements Phrases {
+    Back: string = "Back";
+    Next: string = "Next";
+    LetsGo: string = "Let's go!";
     FromWebsite: string = "From website";
     FromWebsiteDescription: string = "Import your favorite recipes from around the web.";
     FromImages: string = "From images";
